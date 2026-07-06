@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)file:///D:/Downloads/Demo.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nang Mawala ang Ilaw Demo Design Document</title>
+<link href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20Demo%20Design%20Document_files/css2" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0b08;
+  --bg2: #141109;
+  --bg3: #1c1710;
+  --border: rgba(255,255,255,0.07);
+  --border-warm: rgba(180,120,60,0.2);
+  --text: #c8b99a;
+  --text-dim: #7a6a54;
+  --text-bright: #e8d5b5;
+  --red: #8b2020;
+  --red-bright: #c0392b;
+  --red-muted: rgba(139,32,32,0.15);
+  --amber: #9a7020;
+  --amber-bright: #c49a30;
+  --amber-muted: rgba(154,112,32,0.12);
+  --jade: #1e4d2e;
+  --jade-bright: #3a8c54;
+  --jade-muted: rgba(30,77,46,0.2);
+  --smoke: rgba(200,185,154,0.04);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+}
+
+/* COVER */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 5vw;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-warm);
+}
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 40%, rgba(139,32,32,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(154,112,32,0.05) 0%, transparent 60%);
+}
+.cover-rule {
+  position: absolute;
+  top: 0; left: 5vw; right: 5vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-warm), transparent);
+}
+.cover-stamp {
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 3rem;
+}
+.cover-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.05em;
+}
+.cover-title-tagalog {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--text-bright);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.cover-title-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  color: var(--amber-bright);
+  letter-spacing: 0.05em;
+  margin-bottom: 3rem;
+  font-weight: 400;
+}
+.cover-meta-row {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+.cover-meta-item { }
+.cover-meta-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 3px;
+}
+.cover-meta-value {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 400;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,11,8,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5vw;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 48px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--amber-bright);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+nav a {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+nav a:hover { color: var(--text-bright); }
+
+/* LAYOUT */
+.page { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+
+/* SECTIONS */
+.section {
+  padding: 5rem 0 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+
+.section-eyebrow {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.8rem;
+}
+.section-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text-bright);
+  margin-bottom: 2rem;
+}
+.section-heading em {
+  color: var(--red-bright);
+  font-style: italic;
+}
+
+/* PROSE */
+p { margin-bottom: 1.2rem; color: var(--text); }
+p:last-child { margin-bottom: 0; }
+
+/* BLOCKQUOTE */
+blockquote {
+  border-left: 2px solid var(--red);
+  padding: 1rem 1.6rem;
+  margin: 2.5rem 0;
+  background: var(--red-muted);
+}
+blockquote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+blockquote cite {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+}
+
+/* NOTE BOX */
+.note {
+  border: 1px dashed rgba(154,112,32,0.3);
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+  background: var(--amber-muted);
+}
+.note-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber-bright);
+  margin-bottom: 0.5rem;
+}
+.note p { font-size: 14px; color: var(--text); }
+
+/* CHARACTERS */
+.char-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.char-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1.4rem;
+  position: relative;
+}
+.char-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+}
+.char-card.clara::before { background: var(--red-bright); }
+.char-card.lena::before { background: var(--jade-bright); }
+.char-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.2rem;
+}
+.char-role {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--amber-bright);
+  margin-bottom: 0.8rem;
+}
+.char-desc { font-size: 13px; color: var(--text); line-height: 1.65; }
+.char-truth {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* SCENES */
+.scene-list { margin: 2rem 0; }
+.scene {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.scene::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 48px;
+  bottom: -2.5rem;
+  width: 1px;
+  background: var(--border);
+}
+.scene:last-child::before { display: none; }
+.scene-num {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.scene-body {}
+.scene-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+.scene-title span {
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+.scene-desc { font-size: 14px; color: var(--text); line-height: 1.7; margin-bottom: 0.8rem; }
+.scene-mech {
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  color: var(--jade-bright);
+  line-height: 1.6;
+  border-left: 2px solid var(--jade);
+  padding-left: 0.8rem;
+  background: var(--jade-muted);
+  padding: 0.6rem 0.8rem;
+}
+.scene-mech strong {
+  color: var(--amber-bright);
+  font-weight: 700;
+}
+
+/* MECHANICS GRID */
+.mech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  margin: 2rem 0;
+  border: 1px solid var(--border);
+}
+.mech-item {
+  background: var(--bg2);
+  padding: 1.2rem 1.4rem;
+}
+.mech-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  margin-bottom: 0.6rem;
+  display: inline-block;
+}
+.mech-tag.stealth { background: var(--red-muted); color: var(--red-bright); }
+.mech-tag.moral { background: var(--amber-muted); color: var(--amber-bright); }
+.mech-tag.move { background: var(--jade-muted); color: var(--jade-bright); }
+.mech-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.3rem;
+}
+.mech-scene {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+.mech-desc { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 0.5rem; }
+.mech-rule {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-dim);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ENVIRONMENT */
+.env-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.env-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1.2rem 1.4rem;
+}
+.env-status {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+.env-status.playable { color: var(--jade-bright); }
+.env-status.unseen { color: var(--red-bright); }
+.env-status.seen { color: var(--amber-bright); }
+.env-room {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+.env-desc { font-size: 13px; color: var(--text); line-height: 1.6; }
+
+/* FLOOR PLAN */
+.floorplan {
+  background: var(--bg2);
+  border: 1px solid var(--border-warm);
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+}
+.floorplan-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 1.5rem;
+}
+.fp-svg { width: 100%; height: auto; }
+
+/* SEQUENCE STRIP */
+.seq-strip {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.seq-item {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.seq-pill {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 5px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.seq-pill.red { border-color: rgba(139,32,32,0.4); color: var(--red-bright); background: var(--red-muted); }
+.seq-pill.amber { border-color: rgba(154,112,32,0.4); color: var(--amber-bright); background: var(--amber-muted); }
+.seq-arrow {
+  font-size: 11px;
+  color: var(--border);
+  padding: 0 4px;
+}
+
+/* INVISIBLE CHOICE CALLOUT */
+.invisible-choice {
+  background: var(--bg3);
+  border: 1px solid rgba(139,32,32,0.3);
+  padding: 1.8rem;
+  margin: 2.5rem 0;
+  position: relative;
+}
+.invisible-choice::before {
+  content: 'INVISIBLE CHOICE';
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--text-bright);
+  background: var(--red);
+  padding: 3px 10px;
+  position: absolute;
+  top: -10px; left: 1.4rem;
+}
+.invisible-choice p { font-size: 14px; color: var(--text); margin-bottom: 0.8rem; }
+.invisible-choice p:last-child { margin-bottom: 0; }
+
+/* END DESIGN */
+.end-block {
+  background: var(--bg3);
+  border-top: 2px solid var(--red);
+  padding: 2.5rem;
+  margin: 2.5rem 0;
+}
+.end-block h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+}
+.end-final {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-bright);
+  border-top: 1px solid var(--border-warm);
+  padding-top: 1.2rem;
+  margin-top: 1.2rem;
+  line-height: 1.7;
+}
+
+/* PRODUCTION TABLE */
+.prod-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 13px;
+}
+.prod-table th {
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.prod-table td {
+  padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.prod-table tr:last-child td { border-bottom: none; }
+.prod-table .val { color: var(--text-bright); font-weight: 400; }
+
+/* FOOTER */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 3rem 5vw;
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .char-row { grid-template-columns: 1fr; }
+  .scene { grid-template-columns: 36px 1fr; gap: 1rem; }
+  .mech-grid { grid-template-columns: 1fr; }
+  nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-rule"></div>
+  
+  
+  <div class="cover-title-tagalog">Kita<br></div>
+  <div class="cover-title-en">When the Light Went Out</div>
+  <div class="cover-meta-row">
+    
+    
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Protagonist</div>
+      <div class="cover-meta-value">Clara Reyes, age 28</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Relation to main game</div>
+      <div class="cover-meta-value">Standalone prelude different character, same world</div>
+    </div>
+    <div class="cover-meta-item">
+      <div class="cover-meta-label">Visual style</div>
+      <div class="cover-meta-value">Gothic Articulated puppet theatre</div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">Nang Mawala ang Ilaw</span>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#overview">Overview</a>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#characters">Characters</a>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#scenes">Scenes</a>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#mechanics">Mechanics</a>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#environment">Environment</a>
+    <a href="file:///D:/Downloads/New%20folder%20(11)/Nang%20Mawala%20ang%20Ilaw%20%E2%80%94%20Demo%20Design%20Document.html#production">Production</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- OVERVIEW -->
+  <div class="section" id="overview">
+    <div class="section-eyebrow">What this is</div>
+    <div class="section-heading">A Playable <em> Teaser</em></div>
+
+    <p>Demo is a gothic survival adventure game where players control a teacher faced the horrors of the invasion. Inspired by the style and atmosphere of The Midnight Walk and the tense survival gameplay of the Little nightmares games. players must endure the horror of the invasion (yes, war), think fast, As she journeys deeper into the nightmare, she must confront loss, fear, and the darkness that threathens to consume everything.</p>
+
+    
+
+    
+
+
+    <!-- REFERENCE IMAGES -->
+    <div style="margin: 2.5rem 0;">
+      <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--amber); margin-bottom:1rem;">Visual References</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-bottom:0.6rem;">
+
+        <div style="position:relative;">
+          <img id="ref-img-1" src="./Demo_files/midnight walk.png" alt="The Midnight Walk puppet style reference" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--bg3); border:1px solid var(--border);">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(13,11,8,0.25); padding:6px 10px;">
+            <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.15em; color:var(--amber-bright);">THE MIDNIGHT WALK</div>
+            <div style="font-size:11px; color:var(--text-dim);">Gothic puppet aesthetic   character texture and material feel</div>
+          </div>
+        </div>
+
+        <div style="position:relative;">
+          <img id="ref-img-2" src="./Demo_files/midnight walk 2.png" alt="Midnight Walk creature horror reference" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--bg3); border:1px solid var(--border);">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(13,11,8,0.240); padding:6px 10px;">
+            <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.15em; color:var(--amber-bright);">MIDNIGHT WALK / ENEMY DESIGN</div>
+            <div style="font-size:11px; color:var(--text-dim);">Horror creature aesthetic   soldiers rendered as monstrous puppets</div>
+          </div>
+        </div>
+
+        <div style="position:relative;">
+          <img id="ref-img-3" src="./Demo_files/madgod.png" alt="Puppet soldier aesthetic reference" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--bg3); border:1px solid var(--border);">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(13,11,8,0.25); padding:6px 10px;">
+            <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.15em; color:var(--amber-bright);">PUPPET SOLDIER</div>
+            <div style="font-size:11px; color:var(--text-dim);">Occupation soldier visual tone   texture, weight, threat</div>
+          </div>
+        </div>
+
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+
+        <div style="position:relative;">
+          <img id="ref-img-4" src="./Demo_files/tlou.png" alt="The Last of Us tone and character reference" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--bg3); border:1px solid var(--border);">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(13,11,8,0.45); padding:6px 10px;">
+            <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.15em; color:var(--jade-bright);">THE LAST OF US</div>
+            <div style="font-size:11px; color:var(--jade-bright);">Narrative tone and character emotional grounding</div>
+          </div>
+        </div>
+
+        <div style="position:relative;">
+          <img id="ref-img-5" src="./Demo_files/stop.png" alt="Filipino clay puppet style reference" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--bg3); border:1px solid var(--border);">
+          <div style="position:absolute; bottom:0; left:0; right:0; background:rgba(13,11,8,0.45); padding:6px 10px;">
+            <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:9px; letter-spacing:0.15em; color:var(--jade-bright);">FILIPINO CHARACTER STYLE</div>
+            <div style="font-size:11px; color:var(--jade-bright);">Clay puppet warmth for civilian characters, children, Clara</div>
+          </div>
+        </div>
+
+      </div>
+      
+    <div class="floorplan">
+      <div class="floorplan-label">Clara</div>
+      <div style="position:relative; width:100%; background:var(--bg3); border:1px solid var(--border-warm); min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
+        <img id="map-image" src="./Demo_files/clara.png" alt="School floor plan layout">
+        <div id="map-placeholder" src="map.png" style="position: absolute; inset: 0px; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+          <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber-bright); margin-bottom:0.8rem;">Map Image Placeholder</div>
+          <div style="font-size:13px; color:var(--text-dim); max-width:400px; line-height:1.6;">Replace <code style="color:var(--jade-bright); font-size:11px;">src=""</code> on the img tag above with your image path.<br>Example: <code style="color:var(--jade-bright); font-size:11px;">src="school_map.png"</code></div>
+        </div>
+      </div>
+      <script>
+        (function(){
+          var img = document.getElementById('map-image');
+          var placeholder = document.getElementById('map-placeholder');
+          if(img && img.src && img.src !== window.location.href) {
+            img.onload = function(){ placeholder.style.display='none'; };
+          }
+        })();
+      </script>
+    </div></div>
+
+    <blockquote>
+      <p>The demo's job is not to sell the game. It is to make the player understand what they are agreeing to before they start it.</p>
+      
+    </blockquote>
+
+    <h3 style="font-family:&#39;Cormorant Garamond&#39;,serif; font-size:1.2rem; color:var(--text-bright); margin: 2rem 0 0.8rem; font-weight:600;">Why Clara, not Kita</h3>
+    <p>If the demo protagonist were Kita, the player would know she survives she's the main character. That safety would remove every threat in the demo. Clara has no such protection. The player builds a relationship with her in twenty minutes and the game ends it without asking permission. She will appear as an empty house in the main game's opening chapter. The player will recognize it. They will not need to be told what happened there.</p>
+
+    <div class="note">
+      <div class="note-label">Connection to Main Game</div>
+      <p>Clara is Kita's neighbor not a blood relation, a village teacher, the teacher every likes. Kita passes her empty house in the end of Act I. The empty house does not explain itself. The player already carries the explanation.</p>
+    </div>
+  </div>
+
+  <!-- CHARACTERS -->
+  <div class="section" id="characters">
+    <div class="section-eyebrow">People in the demo</div>
+    <div class="section-heading">Two sisters, <em>one building</em></div>
+
+    <p>The demo has two main characters. everybody in this demo is distinct enough to remember their name. if the players can remember everyone just from their voice or look, the weight of the story is much greator much more effective, where the death is in literal every corner, the question remains, what will happened to the main 2 characters.</p>
+
+    <div class="char-row">
+      <div class="char-card clara">
+        <div class="char-name">Clara Reyes</div>
+        <div class="char-role">Playable &nbsp;·&nbsp; Age 28 &nbsp;·&nbsp; Schoolteacher</div>
+        <div class="char-desc">Not a fighter. A woman who taught children to read and cared whether they understood. She has never done anything wrong in her life just normal woman. loved her sister, showed up to work. The war did not ask her opinion before arriving at her school.</div>
+        <div class="char-truth">What the demo does to her, She arrives at the last room already changed not by choice but by passage. The crawl, the soldier, the blood on her hands that the hallway put there without asking. She opens the last door. She closes it. She walks to the window. That is all she has left.</div>
+      </div>
+      <div class="char-card lena">
+        <div class="char-name">Lena Reyes</div>
+        <div class="char-role">NPC &nbsp;·&nbsp; Age 14 &nbsp;·&nbsp; Clara's younger sister, student</div>
+        <div class="char-desc">She writes on her books with care and draws flowers in the margins of her books. She is the only reason Clara moves toward the fire instead of away from it. SHE is not a plot device she is the specific face that makes the crawl possible. Without Lena there is no reason to go deeper. The demo earns its ending because of her.</div>
+        <div class="char-truth">in the first minutes it shows the relationship between the sisters, the age gap is wide enough that others think the're mothers, but the relationship is much more closer to bestfriends teasing and genuine talks which makes the ending of the demo that much tragic</div>
+      </div>
+    </div>
+
+    
+    
+  </div>
+
+  <!-- SCENES -->
+  <div class="section" id="scenes">
+    <div class="section-eyebrow">Structure</div>
+    <div class="section-heading">Thirteen scenes, <em>one location</em></div>
+
+    <p>The demo does not leave the school grounds. What changes is Clara's relationship to the building from belonging, to surviving, to being the last thing left inside it.</p>
+
+    <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--jade-bright); margin-bottom:0.5rem;">Before the fire</div>
+    <div class="seq-strip">
+      <div class="seq-item"><div class="seq-pill">Lunch / coworker</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill">After class</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill">The sunset</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill amber">The door</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill red">The fire</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill red">The crawl</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill amber">The rubble</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill red">The soldier</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill red">The last room</div><div class="seq-arrow">›</div></div>
+      <div class="seq-item"><div class="seq-pill">The distance</div></div>
+    </div>
+
+    <div class="scene-list">
+
+      
+
+      <div class="scene">
+        <div class="scene-num">00</div>
+        <div class="scene-body">
+          <div class="scene-title">Breakfast &nbsp;<span>sisters</span></div>
+          <div class="scene-desc">its early morning, introduce the setting, 1940s, lucious forest, and a kubo, a decent looking one. then clara and lena, their dynamic is more akin to mother and daughter but you can feel the closeness through their bickering, clara also acts like a child, a more matured child. after getting ready for school, they went out seeing their neighbor, aleng teresita, she got bruises, its private, its nothing to say, they just stayed optimistic 
+<br>
+<br>
+
+cut to the school flags ceremony we watch the whole ceremony in its entirety. the sun is shining full of hope.
+</div>
+          <div class="scene-mech"><strong>why:</strong>the sisters had a fight that last for days, and only to this day they made up, and by made up the player fetches food for her, its a small gesture but enough to make the players to be part of the relationship,</div>
+        </div>
+      </div><div class="scene">
+        <div class="scene-num">01</div>
+        <div class="scene-body">
+          <div class="scene-title">Lunch <span>The Coworker</span></div>
+          <div class="scene-desc">The children have gone out for lunch. Clara is alone at her desk eating when her coworker arrives and sits at the spare desk beside her without being invited, which is the most natural thing in the world between them. The coworker tells her that principal antony is looking for her and she should hide, she threw the whole food in her mouth, and runs down to her sister all the while avoiding the principal at all cost. its cute but creepy, 
+
+<br>
+<br>after seeing her sister she sneaks back successfuly avoiding the principal
+
+</div>
+          <div class="scene-mech"><strong>WHY:</strong>this teaches the playerr to sneak, to familliarize themselves to the sorrounding, and solidify that the sister is so very so so important</div>
+        </div>
+      </div><div class="scene">
+        <div class="scene-num">02</div>
+        <div class="scene-body">
+          <div class="scene-title">After Class &nbsp;<span>The Grade</span></div>
+          <div class="scene-desc">The classroom is empty except for Tomas, eleven years old, standing in front of Clara's desk with his hands in front of him, then the player needs to smack the hand, one time, tomas flinches and clara rubs his hands, regretting it but returns quickly, he needs dicipline she thought, but still gently lets him go</div>
+          <div class="scene-mech"><strong>why:</strong>the player knows some interactions are forced, and they cant do anything about it</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">03</div>
+        <div class="scene-body">
+          <div class="scene-title">The Sunset</div>
+          <div class="scene-desc"> The world is orange, total, the kind of late light that makes even poverty look like a painting. She is tired, the player has a choice to clean up the room, tidy up the chairs pull or push them into position, this is the calm before the storm, but there is a timer, a hidden timer that last too short, then the next thing happened</div>
+          <div class="scene-mech"><strong>Why:</strong>The player now knows to drag/push objects, that calmness, wont stay long, as the players settles into the world, the world flips it.</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">04</div>
+        <div class="scene-body">
+          <div class="scene-title">The Door</div>
+          <div class="scene-desc">women and children are flooding the school building, panics in their eyes. then the a explosion, then another, then another, shaking the building knocking off clara off her feet. women and children scatters to the end and as they pass your door they got gunned down then another hits the same building blocking the middle and igniting a fire, so clara needs to sneak around to escape</div>
+          <div class="scene-mech"><strong>why: </strong>now the player knows the mechanics, they need to put it on the test</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">05</div>
+        <div class="scene-body">
+          <div class="scene-title">Huddled</div>
+          <div class="scene-desc">another artillery hits and closes the way clara came from. then small naked puppets fall in the crevises of the ceiling, the ceiling cracks then a huge pile drops down, its a rat king of these little naked puppets, smiling ear to ear looking at clara and drooling at the sight. 
+
+<br>
+<br>a chase now occurs clara needs to outsmart the creature, clara needs to pull a pillar so the ceiling could fall over the creature, now the fires spreads
+
+</div>
+          <div class="scene-mech"><strong>MECHANICS INTRODUCED zero prompts:</strong> Shadow hugging discovered when standing near a blown window gets Clara seen. Distraction: loose debris, soldiers turn toward sound. Crawling: discovered when upright fails at the hallway threshold. Breath hold: one button prompt, once only the player holds it every time after on instinct. Corpse drag: a body blocks the east passage. The game waits. The player works it out.</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">06</div>
+        <div class="scene-body">
+          <div class="scene-title">Yard</div>
+          <div class="scene-desc">after defeating the creature, the yard is open, fire begins to cosume that part of the building. and in the middle of the fuckin buildin a huge eye ball is in a hole in the building, peering into it, when a survivor flees and it sees it, it fireds a a fire ball straight into its eyes, blasting the survivor into pieces like a tank blasted it.
+
+clara needs to sneak past the eye, she did sucessfully </div>
+
+          
+
+          <div class="scene-mech"><strong>WHY: </strong>the player needs to cross this field, and it has a short encounter that establishes this is really weird and i too is confused</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">07</div>
+        <div class="scene-body">
+          <div class="scene-title">The Soldier</div>
+          <div class="scene-desc">After clara evades into the other building Clara has to pass a corridor. He hears her before she sees him. Takes her down fast. trained, heavy, no contest. The player loses control completely. He has her pinned. He makes sounds. He reaches for his belt. Clara's hand finds the knife near her side the interact prompt appears at the worst possible moment, while she is underneath him. The player presses the button. The game does not cut away.It ends when he stops moving. he slowly slumps over to the side while she lay their, blood all over. she sees an exit but she still has an objective</div>
+          <div class="scene-mech"><strong>MECHANICS:</strong> First and only kill. she knows its the only way, could she negotiate her way out? maybe, just maybe</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">08</div>
+        <div class="scene-body">
+          <div class="scene-title">The Last Room</div>
+          <div class="scene-desc">One door left intact. Clara has been moving toward this door since the artillery hit through the hallway, through the rubble, through the soldier. She opens it. Red. Only red. The walls. The floor. The small clothes. She does not scream. She stands in the doorway and the sounds disappear not faded, gone, as if the world muted itself. Her face holds nothing. Not grief. Not horror. She closes the door. She leaves  </div>
+          <div class="scene-mech"><strong>MECHANICS:</strong> None. The player cannot enter the room. Cannot look away. The door opens and closes and that is all the game allows.</div>
+        </div>
+      </div>
+
+      <div class="scene">
+        <div class="scene-num">09</div>
+        <div class="scene-body">
+          <div class="scene-title">The Distance &nbsp;<span>Demo End</span></div>
+          <div class="scene-desc">The camera follows Clara out of the window and then slowly falls behind. She walks into the back, The camera does not follow. It turns back to the school the building burning in full, the entrance gone, the roof caving inward. The same orange light from Scene 2, returned but wrong now. The same color. the school slowly getting consumed by the fire, Cut to black. No continue prompt. Main menu loads.</div>
+          <div class="scene-mech"><strong>MECHANICS:</strong> Full removal of player agency. The camera is the only perspective. The building is the last image not Clara,  The school. What it was. What it is now. That is the demo's final word.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MECHANICS -->
+  <div class="section" id="mechanics">
+    <div class="section-eyebrow">Systems Design</div>
+    <div class="section-heading">Story in Gameplay</div>
+
+    <p>The game mixes the gameplay of Little nightmares and use the fixed cameras of silent hill games but dynamic enough to make its own feel.</p>
+
+    <div class="mech-grid">
+
+      <div class="mech-item">
+        <span class="mech-tag move">Pillars of the game</span>
+        
+        
+        <div class="mech-name">Stealth, Puzzle-Solving, Platforming </div>
+
+<div class="mech-desc">the one can't move without moving the other pillars, every levels should use this.</div>
+        <div class="mech-rule"></div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Puzzle Solving</span>
+        <div class="mech-name">Puzzles</div>
+        <div class="mech-scene">either a obstacle or a solution</div>
+        <div class="mech-desc">The player faces a puzzles that escalates the situation, it either helps the player or delays the player</div>
+        <div class="mech-rule">Discover by failare, the design should feel simple enough to solve it easily.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Stealth</span>
+        <div class="mech-name">Movement</div>
+        <div class="mech-scene">hide hide hide</div>
+        <div class="mech-desc">The player should feel fear of getting seen, the character is defenseless, the player should feel that too.</div>
+        <div class="mech-rule">Everything is trying to get to you</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Platforming</span>
+        <div class="mech-name">Platforming</div>
+        <div class="mech-scene">Always keep moving</div>
+        <div class="mech-desc">The player is fast enough to maneuver out of the enemies grasp but slow enough when they make a mistake they can catch up to you.</div>
+        <div class="mech-rule">One prompt in the entire demo. After this, the player supplies the tension themselves.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag move">Story</span>
+        <div class="mech-name">Story of the game</div>
+        <div class="mech-scene">Cute to horrifying</div>
+        <div class="mech-desc">The story is about war, what it does to people, when you watch this kind of story its already gritty or dirty, the game build up into it, the contrast of the former and the now is huge</div>
+        <div class="mech-rule">The moment the player understands what they are dragging is the moment the mechanic changes category.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Combat</span>
+        <div class="mech-name">Knife</div>
+        <div class="mech-scene">Introduced: Soldier grapples Clara</div>
+        <div class="mech-desc">The game takes control away completely. Clara is pinned. The interact prompt appears while she is underneath him. The player presses it and holds it. No cutaway, no score, no sound cue on completion. It ends when he stops. The exit is right there after. The player chooses to stay.</div>
+        <div class="mech-rule">The exit being visible is the mechanic. The choice to not use it is the game's only question about who Clara is.</div>
+      </div>
+
+      
+
+      
+
+    </div>
+  <div class="section" id="mechanics">
+    <div class="section-eyebrow">Systems Design</div>
+    <div class="section-heading">Eight mechanics </div>
+
+    <p>this mechanics are still to think about, they're not concrete. but in the demo, the mechanics needs to be limited due to scope of the game</p>
+
+    <div class="mech-grid">
+
+      <div class="mech-item">
+        <span class="mech-tag move">Movement</span>
+        <div class="mech-name">Crawling</div>
+        <div class="mech-scene">Introduced: The hallway, after the fire</div>
+        <div class="mech-desc">The ceiling has collapsed to crawling height. Standing is physically impossible at the threshold Clara crouches automatically when she reaches it. No button, no prompt. What changes is perspective, speed, and sound. The world is larger from the floor. She is smaller in it.</div>
+        <div class="mech-rule">Physical fact before mechanic. The crawl means something because she could still stand, once.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Stealth</span>
+        <div class="mech-name">Shadow hugging</div>
+        <div class="mech-scene">Introduced: Near a blown window, fire scene</div>
+        <div class="mech-desc">The player tries to stand near the blown window. A soldier's head turns. Clara backs against the wall. The shadow is alive. Light is death. No explanation given the failed attempt teaches it. From here the player reads every room for its dark side first.</div>
+        <div class="mech-rule">Discovered by failure. Never explained. The player teaches themselves.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Stealth</span>
+        <div class="mech-name">Distraction throw</div>
+        <div class="mech-scene">Introduced: Blocked corridor, fire scene</div>
+        <div class="mech-desc">Loose debris near a blocked passage. Clara can interact with it she kicks it or displaces it. A soldier turns toward the sound. One second of his back. That is the window. Introduced once, with clear cause and effect. After that the player scans every room for throwable objects.</div>
+        <div class="mech-rule">Shown once clearly. Trusted after that.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Stealth</span>
+        <div class="mech-name">Breath holding</div>
+        <div class="mech-scene">Introduced: Soldier passes within two feet</div>
+        <div class="mech-desc">The game slows. A single prompt appears: hold the button. Clara holds her breath ambient sound drops, replaced by her heartbeat and his footsteps. He moves on. The prompt never appears again. The player presses it every time a soldier is close, without being asked, for the rest of the demo.</div>
+        <div class="mech-rule">One prompt in the entire demo. After this, the player supplies the tension themselves.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag move">Environment</span>
+        <div class="mech-name">Corpse drag</div>
+        <div class="mech-scene">Introduced: Body blocking east corridor</div>
+        <div class="mech-desc">A body is blocking the only path east. No prompt, no arrow. The player moves Clara close she crouches beside it. The interact button appears. She drags it clear. The act takes five seconds and costs something the game never measures. Introduced as a traversal problem. Lands as a moral weight.</div>
+        <div class="mech-rule">The moment the player understands what they are dragging is the moment the mechanic changes category.</div>
+      </div>
+
+      <div class="mech-item">
+        <span class="mech-tag stealth">Combat</span>
+        <div class="mech-name">Knife</div>
+        <div class="mech-scene">Introduced: Soldier grapples Clara</div>
+        <div class="mech-desc">The game takes control away completely. Clara is pinned. The interact prompt appears while she is underneath him. The player presses it and holds it. No cutaway, no score, no sound cue on completion. It ends when he stops. The exit is right there after. The player chooses to stay.</div>
+        <div class="mech-rule">The exit being visible is the mechanic. The choice to not use it is the game's only question about who Clara is.</div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </div></div>
+
+  <!-- ENVIRONMENT -->
+  <div class="section" id="environment">
+    <div class="section-eyebrow">Level Design</div>
+    <div class="section-heading">One school, <em>six spaces</em></div>
+
+    <p>The entire demo exists inside one school building and its immediate yard. This is not a scope compromise it is a deliberate choice that makes the horror intimate. There is no outside world to run to. The building that was safe becomes the building that is killing her, and the player never leaves it.</p>
+
+    <!-- FLOOR PLAN SVG -->
+    <div class="floorplan">
+      <div class="floorplan-label">Map Layout</div>
+      <div style="position:relative; width:100%; background:var(--bg3); border:1px solid var(--border-warm); min-height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; overflow:hidden;">
+        <img id="map-image" src="file:///D:/Downloads/Nang%20Mawala%20ang%20Ilaw%20Demo%20Design%20Document_files/map.png" alt="School floor plan layout" style="width:100%; height:auto; display:block; object-fit:contain;">
+        <div id="map-placeholder" src="map.png" style="position: absolute; inset: 0px; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center;">
+          <div style="font-family:&#39;Courier Prime&#39;,monospace; font-size:11px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber-bright); margin-bottom:0.8rem;">Map Image Placeholder</div>
+          <div style="font-size:13px; color:var(--text-dim); max-width:400px; line-height:1.6;">Replace <code style="color:var(--jade-bright); font-size:11px;">src=""</code> on the img tag above with your image path.<br>Example: <code style="color:var(--jade-bright); font-size:11px;">src="school_map.png"</code></div>
+        </div>
+      </div>
+      <script>
+        (function(){
+          var img = document.getElementById('map-image');
+          var placeholder = document.getElementById('map-placeholder');
+          if(img && img.src && img.src !== window.location.href) {
+            img.onload = function(){ placeholder.style.display='none'; };
+          }
+        })();
+      </script>
+    </div>
+
+    <div class="env-grid">
+      <div class="env-card">
+        <div class="env-status playable">Playable</div>
+        <div class="env-room">Classroom A</div>
+        <div class="env-desc">Clara's room. Where the lesson happens Tomas, Lena in the third row, tomorrow's lesson on the board. Every object here means something before the fire. The room the player leaves and cannot return to.</div>
+      </div>
+      <div class="env-card">
+        <div class="env-status playable">Playable crawl</div>
+        <div class="env-room">The Hallway</div>
+        <div class="env-desc">Same geometry traversed twice: upright in Scene 3 before the fire, on hands and knees after. No new assets. A different camera angle and smoke overlay. Blood is passive it accumulates on Clara as she moves through. Not a system. Environmental fact.</div>
+      </div>
+      <div class="env-card">
+        <div class="env-status playable">Playable stealth</div>
+        <div class="env-room">Side Corridor</div>
+        <div class="env-desc">Connects both wings. Where soldiers enter from. One blown window the light source that makes shadows readable. Shadow hugging, distraction throw, and breath hold all happen here. The corridor is the demo's stealth classroom.</div>
+      </div>
+      <div class="env-card">
+        <div class="env-status playable">Playable optional</div>
+        <div class="env-room">Storage Room</div>
+        <div class="env-desc">Collapsed ceiling, one beam. The woman in the rubble is here. Semi-separate from the main path the player must choose to enter. This makes the encounter feel like a discovery rather than an obstacle. The choice is invisible regardless.</div>
+      </div>
+      <div class="env-card">
+        <div class="env-status unseen">Door only no entry</div>
+        <div class="env-room">Classroom B</div>
+        <div class="env-desc">The last room. Its door is the destination of the entire demo. It is never playable space only the doorway is accessible. What is inside it is seen once, from Clara's perspective, before the door closes. The player cannot enter after.</div>
+      </div>
+      <div class="env-card">
+        <div class="env-status seen">Seen not entered</div>
+        <div class="env-room">The Yard</div>
+        <div class="env-desc">Never playable. Visible through the blown-out wall of Classroom B at the end, and again as the camera turns back after Clara walks away. Soldiers are in it. It is where the demo's final image lives the camera holding on the burning school while Clara walks toward whatever is in the yard.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-label">Asset Efficiency Note</div>
+      <p>The hallway is the same corridor traversed twice from different heights. The crawl sequence requires no new geometry same walls, same floor, different camera angle and smoke particle overlay. Classroom B requires a single interior visible only through a doorway. The yard is a single exterior establishing shot with a fire particle system. Every major emotional beat is achieved through camera angle, lighting, and sound design rather than new geometry.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCTION -->
+  <div class="section" id="production">
+    
+    
+
+    
+
+    
+
+    <div class="end-block">
+      <h3>The Final Frame</h3>
+      <p>The camera turns back to the school while Clara walks toward the something. The building burns. The orange light from the sunset the same color, the same total warmth is back, and it is from the fire now. The demo ends on that image because it is the only honest ending</p>
+      <p>No continue prompt. No chapter select. The main menu loads. The player sits with it.</p>
+      <div class="end-final">The demo's last job is to make the player hesitate before starting the main game. Not because they don't want to play. Because they understand, now, what playing means.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Nang Mawala ang Ilaw &nbsp;·&nbsp; Demo Design Document v1.0 &nbsp;·&nbsp; Standalone prelude to Liwanag &nbsp;·&nbsp; Philippines 1941
+</footer>
+
+
+
+</body></html>
